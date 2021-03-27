@@ -5,5 +5,6 @@ CREATE TABLE public.fazenda (
     endereco_id bigint NOT NULL,
 
     CONSTRAINT pk_fazenda_id PRIMARY KEY (id),
-    FOREIGN KEY (ENDERECO_ID) REFERENCES endereco (ID)
+    FOREIGN KEY (endereco_id) REFERENCES endereco (id),
+    UNIQUE(cnpj)
 );
