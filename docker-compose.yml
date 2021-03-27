@@ -1,0 +1,11 @@
+version: "3.7"
+services:        
+  postgres_cadastro:
+    container_name: db_totvs_agro
+    image: postgres:13.0
+    environment:
+      POSTGRES_USER: agro
+      POSTGRES_PASSWORD: agro
+      POSTGRES_DB: agro
+    ports:
+        - "5432:5432"
