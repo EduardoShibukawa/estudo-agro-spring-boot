@@ -26,10 +26,10 @@ public class FazendaService {
     public Long salvar(FazendaPostDto dto) {
         Objects.requireNonNull(dto.endereco, "Endereço deve ser informado!");
 
-        final Endereco endereco = new Endereco(dto.endereco.cidade, dto.endereco.logradouro, dto.endereco.uf);
+        final Endereco endereco = new Endereco(dto.endereco.cidade, dto.endereco.uf, dto.endereco.logradouro);
         final Fazenda fazenda = new Fazenda(dto.nome, dto.cnpj, endereco);
-
-        return fazenda.getId();
+        
+        return repository.save(fazenda).getId();
     }
 
     public void atualizar(Long id, FazendaPutDto dto) throws NotFoundException {
