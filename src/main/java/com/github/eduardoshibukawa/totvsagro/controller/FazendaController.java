@@ -30,8 +30,12 @@ import javassist.NotFoundException;
 @RequestMapping("fazenda")
 public class FazendaController {
 
+	final private FazendaService fazendaService;
+	
 	@Autowired
-	private FazendaService fazendaService;
+	public FazendaController(FazendaService fazendaService) {
+		this.fazendaService = fazendaService;
+	}
 
 	@GetMapping("{id}")
 	public ResponseEntity<FazendaResponseDto> buscarPorID(@PathVariable("id") Long id) {

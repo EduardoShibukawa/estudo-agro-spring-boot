@@ -20,13 +20,18 @@ import javassist.NotFoundException;
 @Service
 public class FazendaService {
 
-    @Autowired
-    private FazendaRepository repository;
+    final private FazendaRepository repository;
+    
+    final private FazendaMapper mapper;
     
     @Autowired
-    private FazendaMapper mapper;
-    
-    public Long salvar(FazendaPostDto dto) {
+    public FazendaService(FazendaRepository repository, FazendaMapper mapper) {
+		super();
+		this.repository = repository;
+		this.mapper = mapper;
+	}
+
+	public Long salvar(FazendaPostDto dto) {
         Objects.requireNonNull(dto.getEndereco(), "Endereço deve ser informado!");
         
         final Fazenda fazenda = mapper.toModel(dto);

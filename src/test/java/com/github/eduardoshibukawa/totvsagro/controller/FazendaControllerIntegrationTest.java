@@ -1,50 +1,36 @@
 package com.github.eduardoshibukawa.totvsagro.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.github.eduardoshibukawa.totvsagro.configuration.AbstractIntegrationTest;
+import com.github.eduardoshibukawa.totvsagro.dto.EnderecoPostDto;
 import com.github.eduardoshibukawa.totvsagro.dto.FazendaPostDto;
-import com.github.eduardoshibukawa.totvsagro.service.FazendaService;
-
 
 @SpringBootTest
-public class FazendaControllerTest {
-
-	@Mock
-	private FazendaService fazendaServiceMock;
-	
+class FazendaControllerIntegrationTest extends AbstractIntegrationTest {
+		
+	@Autowired
+	private FazendaController controller;
+    
 	@Test
-	void quandoRealizarPostEntaoDeveUtilizarService() {
-		FazendaController controller = new FazendaController(fazendaServiceMock);
-		
-		when(fazendaServiceMock.salvar(any())).thenReturn(any());
-		
-		FazendaPostDto dto = new FazendaPostDto();
-		
-		controller.post(dto);
-				
-		verify(fazendaServiceMock).salvar(dto);
-	}
-
-	@Test
+	@Transactional
 	void quandoRealizarPostComSucessoEntaoDeveTerResposta201() {		
-		FazendaController controller = new FazendaController(fazendaServiceMock);
-		
-		when(fazendaServiceMock.salvar(any())).thenReturn(1L);
-		
-		FazendaPostDto dto = new FazendaPostDto();
+		FazendaPostDto dto = new FazendaPostDto(
+				"Eduardo Farms", 
+				"74.041.050/0001-53", 
+				new EnderecoPostDto("Maringá", "PR", "Av Maringá 1388"));		
 		
 		ResponseEntity<Long> resposta = controller.post(dto);
 		 		
@@ -52,12 +38,12 @@ public class FazendaControllerTest {
 	}
 	
 	@Test
+	@Transactional
 	void quandoRealizarPostComSucessoEntaoUriDeveEstarCorreta() throws URISyntaxException {		
-		FazendaController controller = new FazendaController(fazendaServiceMock);
-		
-		when(fazendaServiceMock.salvar(any())).thenReturn(1L);
-		
-		FazendaPostDto dto = new FazendaPostDto();
+		FazendaPostDto dto = new FazendaPostDto(
+				"Eduardo Farms", 
+				"74.041.050/0001-53", 
+				new EnderecoPostDto("Maringá", "PR", "Av Maringá 1388"));		
 		
 		ResponseEntity<Long> resposta = controller.post(dto);
 		
@@ -68,5 +54,5 @@ public class FazendaControllerTest {
 				.toUri();
 		
 		assertEquals(expectedURI, resposta.getHeaders().getLocation());
-	}	
+	}
 }
