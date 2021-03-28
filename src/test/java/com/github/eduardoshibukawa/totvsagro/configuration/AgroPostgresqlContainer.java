@@ -1,5 +1,7 @@
 package com.github.eduardoshibukawa.totvsagro.configuration;
 
+import java.util.Objects;
+
 import org.testcontainers.containers.PostgreSQLContainer;
 
 public class AgroPostgresqlContainer extends PostgreSQLContainer<AgroPostgresqlContainer> {
@@ -14,7 +16,7 @@ public class AgroPostgresqlContainer extends PostgreSQLContainer<AgroPostgresqlC
     }
 
     public static AgroPostgresqlContainer getInstance() {
-        if (container == null) {
+        if (Objects.isNull(container)) {
             container = new AgroPostgresqlContainer();
             container
 	            .withDatabaseName("agro")
