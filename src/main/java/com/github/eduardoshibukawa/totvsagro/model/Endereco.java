@@ -45,12 +45,28 @@ public class Endereco {
 		return cidade;
 	}
 
-	public String getUF() {
+	public String getUf() {
 		return uf;
 	}
 
 	public String getLogradouro() {
 		return logradouro;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+	
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
 	@Override

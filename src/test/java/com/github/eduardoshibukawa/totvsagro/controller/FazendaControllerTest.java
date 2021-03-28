@@ -2,12 +2,11 @@ package com.github.eduardoshibukawa.totvsagro.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.github.eduardoshibukawa.totvsagro.dto.FazendaPostDto;
-import com.github.eduardoshibukawa.totvsagro.dto.FazendaResponseDto;
 import com.github.eduardoshibukawa.totvsagro.service.FazendaService;
 
 @SpringBootTest

@@ -1,20 +1,43 @@
 package com.github.eduardoshibukawa.totvsagro.dto;
 
-import java.util.Objects;
-
-import com.github.eduardoshibukawa.totvsagro.model.Endereco;
-
 public class EnderecoResponseDto {
 
-    public String cidade;
-    public String uf;
-    public String logradouro;
+	private Long id;
+    private String cidade;
+    private String uf;
+    private String logradouro;
     
-    public EnderecoResponseDto(Endereco endereco) {
-        this.cidade 
-            = Objects.requireNonNull(endereco, "Endereço não deve ser vazio!")
-                .getCidade();
-        this.uf = endereco.getUF();
-        this.logradouro = endereco.getLogradouro();
-    }
+    public EnderecoResponseDto() {}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

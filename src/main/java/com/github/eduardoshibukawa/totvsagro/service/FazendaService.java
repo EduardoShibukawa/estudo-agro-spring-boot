@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.github.eduardoshibukawa.totvsagro.dto.FazendaPostDto;
 import com.github.eduardoshibukawa.totvsagro.dto.FazendaPutDto;
 import com.github.eduardoshibukawa.totvsagro.dto.FazendaResponseDto;
-import com.github.eduardoshibukawa.totvsagro.model.Endereco;
+import com.github.eduardoshibukawa.totvsagro.dto.mapper.FazendaMapper;
 import com.github.eduardoshibukawa.totvsagro.model.Fazenda;
 import com.github.eduardoshibukawa.totvsagro.repositories.FazendaRepository;
 
@@ -22,20 +22,20 @@ public class FazendaService {
 
     @Autowired
     private FazendaRepository repository;
-
+    
+    @Autowired
+    private FazendaMapper mapper;
+    
     public Long salvar(FazendaPostDto dto) {
-        Objects.requireNonNull(dto.endereco, "Endereço deve ser informado!");
-
-        final Endereco endereco = new Endereco(dto.endereco.cidade, dto.endereco.uf, dto.endereco.logradouro);
-        final Fazenda fazenda = new Fazenda(dto.nome, dto.cnpj, endereco);
+        Objects.requireNonNull(dto.getEndereco(), "Endereço deve ser informado!");
+        
+        final Fazenda fazenda = mapper.toModel(dto);
         
         return repository.save(fazenda).getId();
     }
 
     public void atualizar(Long id, FazendaPutDto dto) throws NotFoundException {
-        Fazenda fazenda = this.buscarFazendaById(id);
-
-        fazenda.setNome(dto.nome);
+        Fazenda fazenda = mapper.toModel(dto, this.buscarFazendaById(id));
 
         repository.save(fazenda);
     }
@@ -46,11 +46,11 @@ public class FazendaService {
     
     public Page<FazendaResponseDto> findAll(Integer page, Integer sizePage) {
     	return repository.findAll(PageRequest.of(page, sizePage))
-    				.map(f -> new FazendaResponseDto(f));
+    				.map(f -> mapper.toResponseDTO(f));
     }
     
     public FazendaResponseDto buscarById(Long id) throws NotFoundException { 
-    	return new FazendaResponseDto(this.buscarFazendaById(id));
+    	return mapper.toResponseDTO(this.buscarFazendaById(id));
     }
 
     private Fazenda buscarFazendaById(Long id) throws NotFoundException {
@@ -62,7 +62,4 @@ public class FazendaService {
         
         return op.get();
     }
-    
-    
-
 }
